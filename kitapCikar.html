@@ -64,7 +64,8 @@
             db.collection("kitaplar").get().then((querySnapshot) => {
                 querySnapshot.forEach((doc) => {
                     if (metinKutusu.value == doc.data().kitapAd) {
-                        db.collection("kitaplar").doc(metinKutusu.value).delete().then(() => {
+                        db.collection("kitaplar").doc(metinKutusu.value).delete()
+                        .then(() => {
                             alert(`${metinKutusu.value} kitabı kaldırıldı.`)
                         }).catch((error) => {
                             console.error("Error removing document: ", error);

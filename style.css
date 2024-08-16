@@ -1,10 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=New+Amsterdam&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
 
 *{
     margin: 0px;
     padding: 0px;
     position: relative;
-    font-family: New Amsterdam, sans-serif;
+    font-family: Oswald, sans-serif;
 }
 
 
