@@ -8,7 +8,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.13/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.13/firebase-firestore-compat.js"></script>
     <link rel="stylesheet" href="style.css">
-    <title>Kütüphane Yönetim</title>
+    <title>Kütüphane - Kitap Ekle</title>
 </head>
 
 <body>
@@ -27,6 +27,12 @@
             </div>
         </div>
     </aside>
+    <center>
+        <div class="container">
+            <input type="text" placeholder="Kitap İsmi" id="kitapAd"> <button id="ekle"><i class="fa-solid fa-plus"></i>
+                Ekle</button>
+        </div>
+    </center>
     <!-- Burası Flex için (Space-between)-->
     <div></div>
     <script type="module">
@@ -43,6 +49,29 @@
         // Initialize Firebase
         const app = firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
+        let ekleBtn = document.querySelector('#ekle')
+        let metinKutusu = document.querySelector('#kitapAd')
+
+        ekleBtn.addEventListener('click', () => {
+            if (metinKutusu.value != '') {
+                let ad = prompt('Adınız');
+
+                db.collection("kitaplar").doc(metinKutusu.value).set({
+                    kitapAd: metinKutusu.value,
+                    tarih: new Date(),
+                    ekleyen: ad
+                })
+                    .then(() => {
+                        alert(`${metinKutusu.value} kitabı başarıyla eklendi.`);
+                    })
+                    .catch((error) => {
+                        console.error("Error writing document: ", error);
+                    });
+            }
+            else {
+                alert('Metin kutusu boş olmamalı.')
+            }
+        });
     </script>
 
     <script src="script.js"></script>

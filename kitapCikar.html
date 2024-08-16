@@ -27,6 +27,18 @@
             </div>
         </div>
     </aside>
+    <center>
+        <div class="container">
+            <input type="text" placeholder="Kitap İsmi" id="kitapAd"> <button id="cikar"><i
+                    class="fa-solid fa-minus"></i>
+                Çıkar</button>
+            <button id="listele"><i class="fa-solid fa-list"></i> Kitapları Listele</button>
+        </div>
+
+        <div class="kitaplar">
+
+        </div>
+    </center>
     <!-- Burası Flex için (Space-between)-->
     <div></div>
     <script type="module">
@@ -43,6 +55,34 @@
         // Initialize Firebase
         const app = firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
+        let cikarBtn = document.querySelector('#cikar')
+        let metinKutusu = document.querySelector('#kitapAd')
+        let listeleBtn = document.querySelector('#listele')
+        let kitaplar = document.querySelector('.kitaplar')
+
+        cikarBtn.addEventListener('click', function () {
+            db.collection("kitaplar").get().then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    if (metinKutusu.value == doc.data().kitapAd) {
+                        db.collection("kitaplar").doc(metinKutusu.value).delete().then(() => {
+                            alert(`${metinKutusu.value} kitabı kaldırıldı.`)
+                        }).catch((error) => {
+                            console.error("Error removing document: ", error);
+                        });
+                    }
+                });
+            });
+        })
+
+        listeleBtn.addEventListener('click', function () {
+            db.collection("kitaplar").get().then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    kitaplar.insertAdjacentHTML('afterbegin', `
+                    <div>${doc.data().kitapAd}</div>`)
+                });
+            });
+        })
+
     </script>
 
     <script src="script.js"></script>
