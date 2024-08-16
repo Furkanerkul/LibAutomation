@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Kütüphane Yönetim</title>
+</head>
+<body>
+    <script type="module">
+
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+        import { getFirestore, collection, addDoc, onSnapshot, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
+
+        const firebaseConfig = {
+          apiKey: "",
+          authDomain: "libautiomation.firebaseapp.com",
+          projectId: "libautiomation",
+          storageBucket: "libautiomation.appspot.com",
+          messagingSenderId: "238167079982",
+          appId: "1:238167079982:web:7556915c98cb7f0a42b3bf"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+      </script>
+</body>
+</html>
