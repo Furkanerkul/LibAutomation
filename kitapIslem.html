@@ -8,7 +8,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.13/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.13/firebase-firestore-compat.js"></script>
     <link rel="stylesheet" href="style.css">
-    <title>Kütüphane - Kitap Çıkar</title>
+    <title>Kütüphane - Kitap Teslim</title>
 </head>
 
 <body>
@@ -29,14 +29,29 @@
     </aside>
     <center>
         <div class="container">
-            <input type="text" placeholder="Kitap İsmi" id="kitapAd"> <button id="cikar"><i
-                    class="fa-solid fa-minus"></i>
-                Çıkar</button>
-            <button id="listele"><i class="fa-solid fa-list"></i> Kitapları Listele</button>
-        </div>
-
-        <div class="kitaplar" style="color: black;">
-
+            <table>
+                <tr>
+                    <td>
+                        <input type="text" placeholder="İsim Soyisim" id="isim">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="text" placeholder="Kitabın Adı" id="kitapAdi">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="number" placeholder="Telefon Numarası" id="telno">
+                    </td>
+                </tr>
+                <tr>
+                    <td><button id="teslimEt"><i class="fa-solid fa-plus"></i> Teslim Et</button></td>
+                </tr>
+                <tr>
+                    <td><button id="teslimAl"><i class="fa-solid fa-minus"></i> Teslim Al</button></td>
+                </tr>
+            </table>
         </div>
     </center>
     <!-- Burası Flex için (Space-between)-->
@@ -55,35 +70,38 @@
         // Initialize Firebase
         const app = firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
-        let cikarBtn = document.querySelector('#cikar')
-        let metinKutusu = document.querySelector('#kitapAd')
-        let listeleBtn = document.querySelector('#listele')
-        let kitaplar = document.querySelector('.kitaplar')
+        let teslimEt = document.querySelector('#teslimEt')
+        let teslimAl = document.querySelector('#teslimAl')
+        let isim = document.querySelector('#isim')
+        let telNo = document.querySelector('#telno')
+        let kitapIsim = document.querySelector('#kitapAdi')
 
-        cikarBtn.addEventListener('click', function () {
-            db.collection("kitaplar").get().then((querySnapshot) => {
+        teslimEt.addEventListener('click', () => {
+            db.collection("teslimAlinmayan").doc(isim.value).set({
+                kitapAd: kitapIsim.value,
+                tarih: new Date(),
+                telNo: telNo.value,
+                Ad: isim.value,
+            })
+                .then(() => {
+                    alert(`${isim.value} kişisine ${kitapIsim.value} kitabı teslim edilmiştir.`);
+                })
+                .catch((error) => {
+                    console.error("Error writing document: ", error);
+                });
+        })
+
+        teslimAl.addEventListener('click', () => {
+            db.collection("teslimAlinmayan").get().then((querySnapshot) => {
                 querySnapshot.forEach((doc) => {
-                    if (metinKutusu.value == doc.data().kitapAd) { // textboxdaki değer obje içerisindeki key'in valuesine eşit ise
-                        db.collection("kitaplar").doc(metinKutusu.value).delete()
-                        .then(() => {
-                            alert(`${metinKutusu.value} kitabı kaldırıldı.`)
-                        }).catch((error) => {
-                            console.error("Error removing document: ", error);
-                        });
-                    }
+                    db.collection("teslimAlinmayan").doc(isim.value).delete().then(() => {
+                        alert(`${isim.value} kişisinin kitabı teslim alınmıştır.`)
+                    }).catch((error) => {
+                        console.error("Error removing document: ", error);
+                    });
                 });
             });
         })
-
-        listeleBtn.addEventListener('click', function () {
-            db.collection("kitaplar").get().then((querySnapshot) => {
-                querySnapshot.forEach((doc) => {
-                    kitaplar.insertAdjacentHTML('afterbegin', `
-                    <div>${doc.data().kitapAd}</div>`)
-                });
-            });
-        })
-
     </script>
 
     <script src="script.js"></script>

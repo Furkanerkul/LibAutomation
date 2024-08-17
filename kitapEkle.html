@@ -72,6 +72,12 @@
                 alert('Metin kutusu boş olmamalı.')
             }
         });
+
+        metinKutusu.addEventListener('keypress', (tus) => {
+            if(tus.key == 'Enter'){
+                ekleBtn.click();
+            }
+        })
     </script>
 
     <script src="script.js"></script>
