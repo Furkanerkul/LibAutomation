@@ -73,13 +73,14 @@
         let teslimEt = document.querySelector('#teslimEt')
         let teslimAl = document.querySelector('#teslimAl')
         let isim = document.querySelector('#isim')
+        let tarih = new Date()
         let telNo = document.querySelector('#telno')
         let kitapIsim = document.querySelector('#kitapAdi')
 
         teslimEt.addEventListener('click', () => {
             db.collection("teslimAlinmayan").doc(isim.value).set({
                 kitapAd: kitapIsim.value,
-                tarih: new Date(),
+                tarih: `${tarih.getDate()}.${tarih.getMonth() + 1}.${tarih.getFullYear()}`,
                 telNo: telNo.value,
                 Ad: isim.value,
             })

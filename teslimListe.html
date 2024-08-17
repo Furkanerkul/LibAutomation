@@ -8,7 +8,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.13/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.13/firebase-firestore-compat.js"></script>
     <link rel="stylesheet" href="style.css">
-    <title>Kütüphane - Kitap Ekle</title>
+    <title>Kütüphane - Teslim Listesi</title>
 </head>
 
 <body>
@@ -28,9 +28,10 @@
         </div>
     </aside>
     <center>
-        <div class="container">
-            <input type="text" placeholder="Kitap İsmi" id="kitapAd"> <button id="ekle"><i class="fa-solid fa-plus"></i>
-                Ekle</button>
+        <div class="container" style="top: 0px;">
+            <div class="kitaplar" style="display: flex; flex-direction: column; align-items: center; gap: 10px; color: black; overflow: auto;">
+
+            </div>
         </div>
     </center>
     <!-- Burası Flex için (Space-between)-->
@@ -49,36 +50,20 @@
         // Initialize Firebase
         const app = firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
-        let ekleBtn = document.querySelector('#ekle')
-        let metinKutusu = document.querySelector('#kitapAd')
-        let tarih = new Date()
+        let kitaplar = document.querySelector('.kitaplar')
 
-        ekleBtn.addEventListener('click', () => {
-            if (metinKutusu.value != '') {
-                let ad = prompt('Adınız');
-
-                db.collection("kitaplar").doc(metinKutusu.value).set({
-                    kitapAd: metinKutusu.value,
-                    tarih: `${tarih.getDate()}.${tarih.getMonth() + 1}.${tarih.getFullYear()}`,
-                    ekleyen: ad
-                })
-                    .then(() => {
-                        alert(`${metinKutusu.value} kitabı başarıyla eklendi.`);
-                    })
-                    .catch((error) => {
-                        console.error("Error writing document: ", error);
-                    });
-            }
-            else {
-                alert('Metin kutusu boş olmamalı.')
-            }
-        });
-
-        metinKutusu.addEventListener('keypress', (tus) => {
-            if(tus.key == 'Enter'){
-                ekleBtn.click();
-            }
-        })
+        setTimeout(function () {
+            db.collection("teslimAlinmayan").get().then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                   kitaplar.insertAdjacentHTML('afterbegin', `<div>
+                   Ad: ${doc.data().Ad} <br>
+                   Alınan kitap: ${doc.data().kitapAd} <br>
+                   Tarih: ${doc.data().tarih} <br>
+                   Telefon numarası: ${doc.data().telNo}
+                    </div>`)
+                });
+            });
+        }, 1000);
     </script>
 
     <script src="script.js"></script>
