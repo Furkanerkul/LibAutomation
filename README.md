@@ -61,7 +61,7 @@ It was prepared by me using Google Firebase.
 ### How can I use the project?
 All you need to do is create a Google Firebase account and create a project.
 After creating the project, select CDN during the installation phase and replace the codes below with other keys.
-The most important rule is to create a firestore cloud via firebase and create 2 collections (books, undelivered)
+The most important rule is to create a firestore cloud via firebase and create 2 collections (kitaplar, teslimAlinmayan)
 
 
 ```javascript
