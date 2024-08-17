@@ -16,6 +16,7 @@ Tarafımca google firebase ile hazırlanmıştır.
 ### Projeyi nasıl kullanabilirim?
 Yapmanız gereken tek şey Google Firebase hesabı oluşturun ve bir tane proje oluşturun.
 Projeyi oluşturduktan sonra kurulum aşamasından CDN seçin ve aşağıdaki kodları diğer keyler ile değiştirin.
+En önemli kural firebase üzerinden firestore cloud oluşturun ve 2 tane collection oluşturun (kitaplar, teslimAlinmayan)
 
 
 ```javascript
@@ -60,7 +61,7 @@ It was prepared by me using Google Firebase.
 ### How can I use the project?
 All you need to do is create a Google Firebase account and create a project.
 After creating the project, select CDN during the installation phase and replace the codes below with other keys.
-
+The most important rule is to create a firestore cloud via firebase and create 2 collections (books, undelivered)
 
 
 ```javascript
